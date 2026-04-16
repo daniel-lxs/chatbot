@@ -59,8 +59,12 @@ test.describe("Model Selector", () => {
       .first();
     await modelButton.click();
 
-    await expect(page.getByText("Mistral")).toBeVisible();
-    await expect(page.getByText("Moonshot")).toBeVisible();
+    await expect(
+      page.getByRole("option", { name: /mistral logo Codestral/i })
+    ).toBeVisible();
+    await expect(
+      page.getByRole("option", { name: /moonshotai logo Kimi K2 0905/i })
+    ).toBeVisible();
   });
 
   test("can select a different model", async ({ page }) => {
