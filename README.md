@@ -69,3 +69,8 @@ pnpm dev
 ```
 
 Your app template should now be running on [localhost:3000](http://localhost:3000).
+
+## Testing notes
+
+Run `pnpm dev` from the project root after installing dependencies and pulling environment variables.
+Open `http://localhost:3000` in your browser and keep the dev server running while testing locally.
