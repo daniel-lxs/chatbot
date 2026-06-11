@@ -69,3 +69,8 @@ pnpm dev
 ```
 
 Your app template should now be running on [localhost:3000](http://localhost:3000).
+
+## Testing notes
+
+Run `pnpm dev` from the project root after `pnpm install` and `pnpm db:migrate` complete.
+The local dev server is available at [localhost:3000](http://localhost:3000) while you test changes in the browser.
