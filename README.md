@@ -12,7 +12,8 @@
   <a href="#features"><strong>Features</strong></a> ·
   <a href="#model-providers"><strong>Model Providers</strong></a> ·
   <a href="#deploy-your-own"><strong>Deploy Your Own</strong></a> ·
-  <a href="#running-locally"><strong>Running locally</strong></a>
+  <a href="#running-locally"><strong>Running locally</strong></a> ·
+  <a href="docs/testing.md"><strong>Testing</strong></a>
 </p>
 <br/>
 
@@ -69,3 +70,7 @@ pnpm dev
 ```
 
 Your app template should now be running on [localhost:3000](http://localhost:3000).
+
+## Testing
+
+See [docs/testing.md](docs/testing.md) for the current test workflow, Playwright setup, and conventions for adding new coverage.
