@@ -12,7 +12,8 @@
   <a href="#features"><strong>Features</strong></a> ·
   <a href="#model-providers"><strong>Model Providers</strong></a> ·
   <a href="#deploy-your-own"><strong>Deploy Your Own</strong></a> ·
-  <a href="#running-locally"><strong>Running locally</strong></a>
+  <a href="#running-locally"><strong>Running locally</strong></a> ·
+  <a href="docs/troubleshooting.md"><strong>Troubleshooting</strong></a>
 </p>
 <br/>
 
@@ -69,3 +70,5 @@ pnpm dev
 ```
 
 Your app template should now be running on [localhost:3000](http://localhost:3000).
+
+If local setup or runtime behavior looks off, see [docs/troubleshooting.md](docs/troubleshooting.md).
