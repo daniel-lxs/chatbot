@@ -12,6 +12,7 @@
   <a href="#features"><strong>Features</strong></a> ·
   <a href="#model-providers"><strong>Model Providers</strong></a> ·
   <a href="#deploy-your-own"><strong>Deploy Your Own</strong></a> ·
+  <a href="docs/deployment.md"><strong>Deployment Guide</strong></a> ·
   <a href="#running-locally"><strong>Running locally</strong></a>
 </p>
 <br/>
@@ -51,6 +52,8 @@ With the [AI SDK](https://ai-sdk.dev/docs/introduction), you can also switch to 
 You can deploy your own version of Chatbot to Vercel with one click:
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/templates/next.js/chatbot)
+
+For a step-by-step production setup guide, see [docs/deployment.md](docs/deployment.md).
 
 ## Running locally
 
