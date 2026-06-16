@@ -1,20 +1,12 @@
 export function parseRange(input: string): number[] {
-  const [startPart, endPart] = input.split('-').map((part) => part.trim());
-  const start = Number.parseInt(startPart, 10);
+  const match = input.trim().match(/^(-?\d+)(?:\s*-\s*(-?\d+))?$/);
 
-  if (!Number.isInteger(start)) {
+  if (!match) {
     return [];
   }
 
-  if (!endPart) {
-    return [start];
-  }
-
-  const end = Number.parseInt(endPart, 10);
-
-  if (!Number.isInteger(end)) {
-    return [];
-  }
+  const start = Number(match[1]);
+  const end = match[2] ? Number(match[2]) : start;
 
   const step = start <= end ? 1 : -1;
   const length = Math.abs(end - start) + 1;
