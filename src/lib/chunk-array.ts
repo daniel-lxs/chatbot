@@ -1,6 +1,6 @@
 export function chunkArray<T>(items: T[], size: number): T[][] {
-  if (size <= 0) {
-    throw new Error('size must be greater than 0');
+  if (!Number.isInteger(size) || size <= 0) {
+    throw new Error('size must be a positive integer');
   }
 
   const chunks: T[][] = [];
