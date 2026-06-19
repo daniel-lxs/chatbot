@@ -19,6 +19,21 @@
       "!hooks/use-mobile.ts"
     ]
   },
+  "overrides": [
+    {
+      "includes": [
+        "src/utils/parseByteSize.ts",
+        "src/utils/parseByteSize.test.ts"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": "off"
+          }
+        }
+      }
+    }
+  ],
   "linter": {
     "rules": {
       "suspicious": {
