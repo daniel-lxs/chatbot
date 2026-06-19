@@ -8,6 +8,7 @@
     "start": "next start",
     "check": "ultracite check",
     "fix": "ultracite fix",
+    "test:unit": "pnpm exec tsx --test tests/unit/**/*.test.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "npx tsx lib/db/migrate.ts",
     "db:studio": "drizzle-kit studio",
