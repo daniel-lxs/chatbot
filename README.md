@@ -58,7 +58,7 @@ You will need to use the environment variables [defined in `.env.example`](.env.
 
 > Note: You should not commit your `.env` file or it will expose secrets that will allow others to control access to your various AI and authentication provider accounts.
 
-1. Install Vercel CLI: `npm i -g vercel`
+1. Install Vercel CLI: `pnpm i -g vercel`
 2. Link local instance with Vercel and GitHub accounts (creates `.vercel` directory): `vercel link`
 3. Download your environment variables: `vercel env pull`
 
