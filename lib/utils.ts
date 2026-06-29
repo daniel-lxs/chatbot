@@ -58,10 +58,13 @@ export function getDocumentTimestampByIndex(
   documents: Document[],
   index: number,
 ) {
-  if (!documents) { return new Date(); }
-  if (index > documents.length) { return new Date(); }
+  const documentAtIndex = documents[index];
 
-  return documents[index].createdAt;
+  if (documentAtIndex) {
+    return documentAtIndex.createdAt;
+  }
+
+  return documents.at(-1)?.createdAt ?? new Date();
 }
 
 export function sanitizeText(text: string) {
