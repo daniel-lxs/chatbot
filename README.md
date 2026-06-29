@@ -54,18 +54,27 @@ You can deploy your own version of Chatbot to Vercel with one click:
 
 ## Running locally
 
-You will need to use the environment variables [defined in `.env.example`](.env.example) to run Chatbot. It's recommended you use [Vercel Environment Variables](https://vercel.com/docs/projects/environment-variables) for this, but a `.env` file is all that is necessary.
+You will need the environment variables [defined in `.env.example`](.env.example) to run Chatbot locally. The app reads local secrets from `.env.local`, and the Playwright test setup loads that same file.
 
 > Note: You should not commit your `.env` file or it will expose secrets that will allow others to control access to your various AI and authentication provider accounts.
 
-1. Install Vercel CLI: `npm i -g vercel`
-2. Link local instance with Vercel and GitHub accounts (creates `.vercel` directory): `vercel link`
-3. Download your environment variables: `vercel env pull`
+1. Install dependencies: `pnpm install`
+2. Create `.env.local` from the example file: `cp .env.example .env.local`
+3. Fill in the values in `.env.local`
+4. Optional: install Vercel CLI: `npm i -g vercel`
+5. Optional: link the local instance with your Vercel and GitHub accounts (creates `.vercel` directory): `vercel link`
+6. Optional: pull your Vercel environment variables into `.env.local`: `vercel env pull .env.local`
 
 ```bash
-pnpm install
 pnpm db:migrate # Setup database or apply latest database changes
 pnpm dev
 ```
 
 Your app template should now be running on [localhost:3000](http://localhost:3000).
+
+Useful validation commands while developing:
+
+```bash
+pnpm check
+pnpm test
+```
