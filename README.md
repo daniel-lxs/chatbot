@@ -18,6 +18,8 @@
 
 ## Features
 
+<!-- NOTE: This template is actively maintained. Verify feature coverage against the latest code before relying on it. -->
+
 - [Next.js](https://nextjs.org) App Router
   - Advanced routing for seamless navigation and performance
   - React Server Components (RSCs) and Server Actions for server-side rendering and increased performance
