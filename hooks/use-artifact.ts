@@ -20,6 +20,17 @@ export const initialArtifactData: UIArtifact = {
 };
 
 type Selector<T> = (state: UIArtifact) => T;
+type ArtifactSetter = (
+  updaterFn: UIArtifact | ((currentArtifact: UIArtifact) => UIArtifact)
+) => void;
+type MetadataSetter<M> = ReturnType<typeof useSWR<M>>["mutate"];
+
+type UseArtifactReturn<M> = {
+  artifact: UIArtifact;
+  setArtifact: ArtifactSetter;
+  metadata: M | null;
+  setMetadata: MetadataSetter<M | null>;
+};
 
 export function useArtifactSelector<Selected>(selector: Selector<Selected>) {
   const { data: localArtifact } = useSWR<UIArtifact>("artifact", null, {
@@ -36,7 +47,7 @@ export function useArtifactSelector<Selected>(selector: Selector<Selected>) {
   return selectedValue;
 }
 
-export function useArtifact() {
+export function useArtifact<M = unknown>(): UseArtifactReturn<M> {
   const { data: localArtifact, mutate: setLocalArtifact } = useSWR<UIArtifact>(
     "artifact",
     null,
@@ -52,8 +63,8 @@ export function useArtifact() {
     return localArtifact;
   }, [localArtifact]);
 
-  const setArtifact = useCallback(
-    (updaterFn: UIArtifact | ((currentArtifact: UIArtifact) => UIArtifact)) => {
+  const setArtifact = useCallback<ArtifactSetter>(
+    (updaterFn) => {
       setLocalArtifact((currentArtifact) => {
         const artifactToUpdate = currentArtifact || initialArtifactData;
 
@@ -68,7 +79,7 @@ export function useArtifact() {
   );
 
   const { data: localArtifactMetadata, mutate: setLocalArtifactMetadata } =
-    useSWR<any>(
+    useSWR<M | null>(
       () =>
         artifact.documentId ? `artifact-metadata-${artifact.documentId}` : null,
       null,
