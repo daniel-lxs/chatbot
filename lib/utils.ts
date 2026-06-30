@@ -14,13 +14,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const fetcher = async (url: string) => {
-  const response = await fetch(url);
-
-  if (!response.ok) {
-    const { code, cause } = await response.json();
-    throw new ChatbotError(code as ErrorCode, cause);
-  }
-
+  const response = await fetchWithErrorHandlers(url);
   return response.json();
 };
 
