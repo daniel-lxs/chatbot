@@ -6,6 +6,7 @@ export function useScrollToBottom() {
   const [isAtBottom, setIsAtBottom] = useState(true);
   const isAtBottomRef = useRef(true);
   const isUserScrollingRef = useRef(false);
+  const isProgrammaticScrollRef = useRef(false);
 
   useEffect(() => {
     isAtBottomRef.current = isAtBottom;
@@ -23,6 +24,10 @@ export function useScrollToBottom() {
     if (!containerRef.current) {
       return;
     }
+    isProgrammaticScrollRef.current = true;
+    setIsAtBottom(true);
+    isAtBottomRef.current = true;
+    isUserScrollingRef.current = false;
     containerRef.current.scrollTo({
       top: containerRef.current.scrollHeight,
       behavior,
@@ -38,6 +43,16 @@ export function useScrollToBottom() {
     let scrollTimeout: ReturnType<typeof setTimeout>;
 
     const handleScroll = () => {
+      if (isProgrammaticScrollRef.current) {
+        const atBottom = checkIfAtBottom();
+        if (atBottom) {
+          isProgrammaticScrollRef.current = false;
+          setIsAtBottom(true);
+          isAtBottomRef.current = true;
+        }
+        return;
+      }
+
       isUserScrollingRef.current = true;
       clearTimeout(scrollTimeout);
 
@@ -66,6 +81,7 @@ export function useScrollToBottom() {
     const scrollIfNeeded = () => {
       if (isAtBottomRef.current && !isUserScrollingRef.current) {
         requestAnimationFrame(() => {
+          isProgrammaticScrollRef.current = true;
           container.scrollTo({
             top: container.scrollHeight,
             behavior: "instant",
@@ -110,6 +126,7 @@ export function useScrollToBottom() {
     setIsAtBottom(true);
     isAtBottomRef.current = true;
     isUserScrollingRef.current = false;
+    isProgrammaticScrollRef.current = false;
   }, []);
 
   return {
