@@ -13,14 +13,18 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const fetcher = async (url: string) => {
-  const response = await fetch(url);
-
-  if (!response.ok) {
-    const { code, cause } = await response.json();
-    throw new ChatbotError(code as ErrorCode, cause);
+async function assertOkResponse(response: Response) {
+  if (response.ok) {
+    return;
   }
 
+  const { code, cause } = await response.json();
+  throw new ChatbotError(code as ErrorCode, cause);
+}
+
+export const fetcher = async (url: string) => {
+  const response = await fetch(url);
+  await assertOkResponse(response);
   return response.json();
 };
 
@@ -30,12 +34,7 @@ export async function fetchWithErrorHandlers(
 ) {
   try {
     const response = await fetch(input, init);
-
-    if (!response.ok) {
-      const { code, cause } = await response.json();
-      throw new ChatbotError(code as ErrorCode, cause);
-    }
-
+    await assertOkResponse(response);
     return response;
   } catch (error: unknown) {
     if (typeof navigator !== 'undefined' && !navigator.onLine) {
