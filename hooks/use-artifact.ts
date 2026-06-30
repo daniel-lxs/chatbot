@@ -1,7 +1,10 @@
 "use client";
 
+import type { Dispatch, SetStateAction } from "react";
 import { useCallback, useMemo } from "react";
 import useSWR from "swr";
+import type { ArtifactKind } from "@/components/chat/artifact";
+import { artifactDefinitions } from "@/components/chat/artifact";
 import type { UIArtifact } from "@/components/chat/artifact";
 
 export const initialArtifactData: UIArtifact = {
@@ -21,6 +24,22 @@ export const initialArtifactData: UIArtifact = {
 
 type Selector<T> = (state: UIArtifact) => T;
 
+type ArtifactMetadataByKind = {
+  [Definition in (typeof artifactDefinitions)[number] as Definition["kind"]]: Definition extends {
+    initialize?: (parameters: { setMetadata: Dispatch<SetStateAction<infer Metadata>> }) => void;
+  }
+    ? Metadata
+    : Definition extends {
+          onStreamPart: (args: {
+            setMetadata: Dispatch<SetStateAction<infer Metadata>>;
+          }) => void;
+        }
+      ? Metadata
+      : unknown;
+};
+
+type ArtifactMetadata<K extends ArtifactKind> = ArtifactMetadataByKind[K];
+
 export function useArtifactSelector<Selected>(selector: Selector<Selected>) {
   const { data: localArtifact } = useSWR<UIArtifact>("artifact", null, {
     fallbackData: initialArtifactData,
@@ -36,7 +55,7 @@ export function useArtifactSelector<Selected>(selector: Selector<Selected>) {
   return selectedValue;
 }
 
-export function useArtifact() {
+export function useArtifact<K extends ArtifactKind = ArtifactKind>() {
   const { data: localArtifact, mutate: setLocalArtifact } = useSWR<UIArtifact>(
     "artifact",
     null,
@@ -68,7 +87,7 @@ export function useArtifact() {
   );
 
   const { data: localArtifactMetadata, mutate: setLocalArtifactMetadata } =
-    useSWR<any>(
+    useSWR<ArtifactMetadata<K> | null>(
       () =>
         artifact.documentId ? `artifact-metadata-${artifact.documentId}` : null,
       null,
