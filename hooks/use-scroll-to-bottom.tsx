@@ -3,9 +3,16 @@ import { useCallback, useEffect, useRef, useState } from "react";
 export function useScrollToBottom() {
   const containerRef = useRef<HTMLDivElement>(null);
   const endRef = useRef<HTMLDivElement>(null);
+  const [containerElement, setContainerElement] =
+    useState<HTMLDivElement | null>(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
   const isAtBottomRef = useRef(true);
   const isUserScrollingRef = useRef(false);
+
+  const setContainerNode = useCallback((node: HTMLDivElement | null) => {
+    containerRef.current = node;
+    setContainerElement(node);
+  }, []);
 
   useEffect(() => {
     isAtBottomRef.current = isAtBottom;
@@ -30,7 +37,7 @@ export function useScrollToBottom() {
   }, []);
 
   useEffect(() => {
-    const container = containerRef.current;
+    const container = containerElement;
     if (!container) {
       return;
     }
@@ -55,10 +62,10 @@ export function useScrollToBottom() {
       container.removeEventListener("scroll", handleScroll);
       clearTimeout(scrollTimeout);
     };
-  }, [checkIfAtBottom]);
+  }, [checkIfAtBottom, containerElement]);
 
   useEffect(() => {
-    const container = containerRef.current;
+    const container = containerElement;
     if (!container) {
       return;
     }
@@ -94,7 +101,7 @@ export function useScrollToBottom() {
       mutationObserver.disconnect();
       resizeObserver.disconnect();
     };
-  }, []);
+  }, [containerElement]);
 
   function onViewportEnter() {
     setIsAtBottom(true);
@@ -113,7 +120,7 @@ export function useScrollToBottom() {
   }, []);
 
   return {
-    containerRef,
+    containerRef: setContainerNode,
     endRef,
     isAtBottom,
     scrollToBottom,
